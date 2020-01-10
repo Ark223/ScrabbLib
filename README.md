@@ -38,7 +38,7 @@ standard dictionary or lexicon).
 ```
 
 ### Game(String lang, int players) | Game(Game game)
-> Default language: "PL", player count: 2
+> Default language: "EN", player count: 2
 
 ---
 ```java
