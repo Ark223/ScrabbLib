@@ -72,9 +72,8 @@ public class ScrabbLib
     
     public List<String> generateWords(String letters, sortMode sort) {
         int blanks = (int)letters.chars().filter(c -> c == '-').count();
-        List<String> results = Utils.cutByLength(dictionary, letters.length() + 1)
-            .parallelStream().filter(word -> word.length() <= letters.length() &&
-            Utils.passWord(word, letters, blanks, 0)).collect(Collectors.toList());
+        List<String> results = Utils.cutByLength(dictionary, letters.length() + 1).parallelStream()
+            .filter(word -> Utils.passWord(word, letters, blanks, 0)).collect(Collectors.toList());
         Collections.sort(results, (String a, String b) -> sort == sortMode.Length
             ? b.length() - a.length() : Integer.compare(this.score(b), this.score(a)));
         return results;
