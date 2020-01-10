@@ -11,7 +11,7 @@ public class Utils
                 index = i; break;
             }
         }
-        return new ArrayList<>(list.subList(0, index - 1));
+        return new ArrayList<>(list.subList(0, index));
     }
     
     public static String removeAt(String s, int i) {

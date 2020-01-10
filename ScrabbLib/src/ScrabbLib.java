@@ -47,7 +47,8 @@ public class ScrabbLib
     public void initDictionary() throws Exception {
         try {
             File f = new File("dictionaries/" + (this.language.equals("EN") ? "en.txt" : "pl.txt"));
-            dictionary = Files.readAllLines(f.toPath(), StandardCharsets.UTF_8);
+            this.dictionary = Files.readAllLines(f.toPath(), StandardCharsets.UTF_8);
+            Collections.sort(this.dictionary, (String a, String b) -> a.length() - b.length());
         } catch (Exception ex) {
             throw new Exception("The dictionary file could not be read!");
         }
@@ -71,8 +72,9 @@ public class ScrabbLib
     
     public List<String> generateWords(String letters, sortMode sort) {
         int blanks = (int)letters.chars().filter(c -> c == '-').count();
-        List<String> results = dictionary.parallelStream().filter(word -> word.length() <= letters.length()
-            && Utils.passWord(word, letters, blanks, 0)).collect(Collectors.toList());
+        List<String> results = Utils.cutByLength(dictionary, letters.length() + 1)
+            .parallelStream().filter(word -> word.length() <= letters.length() &&
+            Utils.passWord(word, letters, blanks, 0)).collect(Collectors.toList());
         Collections.sort(results, (String a, String b) -> sort == sortMode.Length
             ? b.length() - a.length() : Integer.compare(this.score(b), this.score(a)));
         return results;
