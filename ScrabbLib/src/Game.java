@@ -114,10 +114,6 @@ public class Game
     
     // Public
     
-    public char[][] getBoard() {
-        return this.board;
-    }
-    
     public void displayBoard() {
         System.out.println("  ABCDEFGHIJKLMNO");
         for (int i = 0; i < this.size; i++)
@@ -136,6 +132,10 @@ public class Game
             System.out.println("Rack: " + this.playerInfo.get(i).getRack());
             System.out.println("Score: " + this.playerInfo.get(i).getScore());
         }
+    }
+    
+    public char[][] getBoard() {
+        return this.board;
     }
     
     public String getPlayersRack() {

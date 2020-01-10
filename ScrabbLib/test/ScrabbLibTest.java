@@ -25,8 +25,7 @@ public class ScrabbLibTest
         g.displayBoard();
         g.displayPlayersInfo();
         Move m2 = new Move(new Position("6J"), Move.direction.Vertical, "TASTE");
-        boolean b = g.tryMakeMove(m2, "TASTEZX", "ACQS");
-        System.out.println(b);
+        g.tryMakeMove(m2, "TASTEZX", "ACQS");
         g.displayBoard();
         g.displayPlayersInfo();
     }

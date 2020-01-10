@@ -42,11 +42,11 @@ standard dictionary or lexicon).
 
 ---
 ```java
-1. char[][] getBoard() //returns a Scrabble board for current game state
+1. void displayBoard() //displays a Scrabble board for current game state on console
 
-2. void displayBoard() //displays a Scrabble board for current game state on console
+2. void displayPlayersInfo() //displays statistics of players (score and rack)
 
-3. void displayPlayersInfo() //displays statistics of players (score and rack)
+3. char[][] getBoard() //returns a Scrabble board for current game state
 
 4. String getPlayersRack() //returns rack of player whose turn is currently
 
