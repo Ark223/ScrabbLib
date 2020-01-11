@@ -17,7 +17,7 @@ public class ScrabbLibTest
         long timeElapsed = System.currentTimeMillis() - start;
         System.out.println("Generated words in: " + timeElapsed + " ms");
         PrintStream out = new PrintStream(System.out, true, "UTF-8");
-        list.stream().forEach((word) -> { out.println(word); });
+        list.stream().forEach(word -> { out.println(word); });
         
         Game g = new Game();
         Move m = new Move(new Position("8H"), Move.direction.Horizontal, "TEST");

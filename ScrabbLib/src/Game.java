@@ -1,10 +1,9 @@
 
+import java.io.PrintStream;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Game
 {
@@ -100,23 +99,25 @@ public class Game
     
     // Public
     
-    public void displayBoard() {
-        System.out.println("  ABCDEFGHIJKLMNO");
+    public void displayBoard() throws Exception {
+        PrintStream out = new PrintStream(System.out, true, "UTF-8");
+        out.println("  ABCDEFGHIJKLMNO");
         for (int i = 0; i < this.size; i++)
         {
-            System.out.print((i + 1) % 10 + " ");
+            out.print((i + 1) % 10 + " ");
             for (int j = 0; j < this.size; j++)
-                System.out.print(this.board[j][i]);
-            System.out.println();
+                out.print(this.board[j][i]);
+            out.println();
         }
     }
     
-    public void displayPlayersInfo() {
+    public void displayPlayersInfo() throws Exception {
+        PrintStream out = new PrintStream(System.out, true, "UTF-8");
         for (int i = 0; i < this.playerInfo.size(); i++)
         {
-            System.out.println("=========\nPlayer " + (i + 1) + ":");
-            System.out.println("Rack: " + this.playerInfo.get(i).getRack());
-            System.out.println("Score: " + this.playerInfo.get(i).getScore());
+            out.println("=========\nPlayer " + (i + 1) + ":");
+            out.println("Rack: " + this.playerInfo.get(i).getRack());
+            out.println("Score: " + this.playerInfo.get(i).getScore());
         }
     }
     
