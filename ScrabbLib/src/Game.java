@@ -42,22 +42,8 @@ public class Game
     
     private int getPlayersCount() { return this.playerInfo.size(); }
     
-    private List<Character> extractor(String set) {
-        List<Character> tiles = new ArrayList<>();
-        Pattern p1 = Pattern.compile("\\d+"), p2 = Pattern.compile("\\D+");
-        Matcher m1 = p1.matcher(set), m2 = p2.matcher(set);
-        List<Integer> t1 = new ArrayList<>();
-        List<Character> t2 = new ArrayList<>();
-        while (m1.find()) t1.add(Integer.parseInt(m1.group()));
-        while (m2.find()) t2.add(m2.group().charAt(0));
-        for (int i = 0; i < t1.size(); i++)
-            for (int j = 0; j < t1.get(i); j++)
-                tiles.add(t2.get(i));
-        return tiles;
-    }
-    
     private List<Character> generateTiles() {
-        return extractor(this.language.equals("EN") ?
+        return Utils.extractor(this.language.equals("EN") ?
             "12E9A9I8O6N6R6T4L4S4U4D3G2B2C2M2P2F2H2V2W2Y1K1J1X1Q1Z" :
             "9A8I7E6O5N5Z4R4W4Y3C3D3K3L3M3P3T2B2G2H2J2Ł2U1Ą1Ę1F1O1S1Z1Ć1Ń1Ź");
     }
@@ -163,11 +149,15 @@ public class Game
     }
     
     public boolean isValid(Move move, String rack) {
-        String word = move.getWord();
-        if (!this.isValid(word)) return false;
-        if (this.isEmpty()) return move.onCenter();
+        if (this.isEmpty()) return this.isValid(move.getWord()) && move.onCenter();
         if (!this.isCrossing(move)) return false;
-        ArrayList<Position> positions = move.getPositions();
+        Move.direction dir = move.getDir();
+        ArrayList<Position> raw = move.getPositions();
+        Position start = this.searcher(raw.get(0), dir == Move.direction.Horizontal ? 'L' : 'U');
+        Position end = this.searcher(raw.get(raw.size() - 1), dir == Move.direction.Horizontal ? 'R' : 'D');
+        String word = Utils.insertWord(this.readWord(start, end), move.getWord());
+        if (!this.isValid(word)) return false;
+        ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);
             if (pos.isOutside()) return false;
@@ -179,10 +169,9 @@ public class Game
                 rack = Utils.removeAt(rack, index);
             }
             if (Character.toUpperCase(this.board[pos.x][pos.y]) == word.charAt(i)) {
-                Move.direction dir = move.getDir();
-                Position start = this.searcher(pos, dir == Move.direction.Horizontal ? 'U' : 'L');
-                Position end = this.searcher(pos, dir == Move.direction.Horizontal ? 'D' : 'R');
-                if (!this.isValid(this.readWord(start, end))) return false;
+                Position testStart = this.searcher(pos, dir == Move.direction.Horizontal ? 'U' : 'L');
+                Position testEnd = this.searcher(pos, dir == Move.direction.Horizontal ? 'D' : 'R');
+                if (!this.isValid(this.readWord(testStart, testEnd))) return false;
             }
             else if (this.board[pos.x][pos.y] != '-')
                 return false;
