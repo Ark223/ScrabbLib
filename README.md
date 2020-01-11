@@ -70,4 +70,5 @@ standard dictionary or lexicon).
 
 ## ToDo
 - extended testing and bugfixing
+- score calculation for given move
 - blank support

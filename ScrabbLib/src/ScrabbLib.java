@@ -80,7 +80,7 @@ public class ScrabbLib
     }
     
     public ArrayList<Move> generateMoves(Game game) {
-        return this.generateMoves(game, game.getPlayersRack());
+        return this.generateMoves(game, game.getPlayersRack(), sortMode.Score);
     }
     
     public ArrayList<Move> generateMoves(Game game, sortMode sort) {
