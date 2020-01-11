@@ -160,7 +160,6 @@ public class Game
         ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);
-            if (pos.isOutside()) return false;
             char letter = word.charAt(i);
             if (this.board[pos.x][pos.y] == '-') {
                 int index = rack.contains(Character.toString(letter)) ?
