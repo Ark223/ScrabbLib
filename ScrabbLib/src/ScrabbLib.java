@@ -56,7 +56,7 @@ public class ScrabbLib
     
     public int score(String word) {
         int total = 0;
-        for (char c : word.toCharArray())
+        for (char c : word.toUpperCase().toCharArray())
             total += this.language.equals("EN") ?
                 this.engValues.get(c) : this.plValues.get(c);
         return total;
