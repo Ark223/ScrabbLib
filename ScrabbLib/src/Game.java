@@ -93,7 +93,7 @@ public class Game
         {
             Position test = pos.add(offset);
             if (this.board[test.x][test.y] == '-' || test.isOutside()) break;
-            pos = test.clone();
+            pos = test;
         }
         return pos;
     }
