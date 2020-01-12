@@ -15,23 +15,19 @@ public class ScrabbLib
     public enum sortMode {Score, Length};
     public enum premiumSquare {None, DoubleLetter, TripleLetter, DoubleWord, TripleWord};
     private List<String> dictionary = new ArrayList<>();
-
+    
     private final Map<Character, Integer> engValues = new HashMap<Character, Integer>() {{
-        put('A', 1); put('B', 3); put('C', 3); put('D', 2); put('E', 1);
-        put('F', 4); put('G', 2); put('H', 4); put('I', 1); put('J', 8);
-        put('K', 5); put('L', 1); put('M', 3); put('N', 1); put('O', 1);
-        put('P', 3); put('Q', 10); put('R', 1); put('S', 1); put('T', 1);
-        put('U', 1); put('V', 4); put('W', 4); put('X', 8); put('Y', 4);
-        put('Z', 10);
+        put('A', 1); put('B', 3); put('C', 3); put('D', 2); put('E', 1); put('F', 4); put('G', 2);
+        put('H', 4); put('I', 1); put('J', 8); put('K', 5); put('L', 1); put('M', 3); put('N', 1);
+        put('O', 1); put('P', 3); put('Q', 10); put('R', 1); put('S', 1); put('T', 1); put('U', 1);
+        put('V', 4); put('W', 4); put('X', 8); put('Y', 4); put('Z', 10);
     }};
     private final Map<Character, Integer> plValues = new HashMap<Character, Integer>() {{
-        put('A', 1); put('Ą', 5); put('B', 3); put('C', 2); put('Ć', 6);
-        put('D', 2); put('E', 1); put('Ę', 5); put('F', 5); put('G', 3);
-        put('H', 3); put('I', 8); put('J', 3); put('K', 2); put('L', 2);
-        put('Ł', 3); put('M', 2); put('N', 1); put('Ń', 7); put('O', 1);
-        put('Ó', 5); put('P', 2); put('R', 1); put('S', 1); put('Ś', 5);
-        put('T', 2); put('U', 3); put('W', 1); put('Y', 2); put('Z', 1);
-        put('Ź', 9); put('Ż', 5);
+        put('A', 1); put('Ą', 5); put('B', 3); put('C', 2); put('Ć', 6); put('D', 2); put('E', 1);
+        put('Ę', 5); put('F', 5); put('G', 3); put('H', 3); put('I', 8); put('J', 3); put('K', 2);
+        put('L', 2); put('Ł', 3); put('M', 2); put('N', 1); put('Ń', 7); put('O', 1); put('Ó', 5);
+        put('P', 2); put('R', 1); put('S', 1); put('Ś', 5); put('T', 2); put('U', 3); put('W', 1);
+        put('Y', 2); put('Z', 1); put('Ź', 9); put('Ż', 5);
     }};
     public static final String bonuses = "T--d---T---d--T-D---t---t---D---D---d-d---D--" +
                                          "d--D---d---D--d----D-----D-----t---t---t---t-" +
