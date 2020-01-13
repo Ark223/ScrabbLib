@@ -8,6 +8,7 @@ public class Player
         this.rack = rack;
         this.score = 0;
     }
+    
     public Player(String rack, int addScore) {
         this.rack = rack;
         this.score += addScore;

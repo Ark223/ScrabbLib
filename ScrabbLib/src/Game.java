@@ -16,7 +16,10 @@ public class Game
     private ArrayList<Player> playerInfo;
     private List<Character> setOfTiles;
     
-    public Game() throws Exception { this("EN", 2); }
+    public Game() throws Exception {
+        this("EN", 2);
+    }
+    
     public Game(String lang, int players) throws Exception {
         this.language = lang;
         this.scrabbLib = new ScrabbLib(lang);
@@ -29,6 +32,7 @@ public class Game
         for (int i = 0; i < players; i++)
             this.playerInfo.add(new Player(takeTiles("")));
     }
+    
     public Game(Game game) throws Exception {
         this.language = game.language;
         this.scrabbLib = game.scrabbLib;
@@ -39,7 +43,9 @@ public class Game
         this.setOfTiles = game.setOfTiles;
     }
     
-    private int getPlayersCount() { return this.playerInfo.size(); }
+    private int getPlayersCount() {
+        return this.playerInfo.size();
+    }
     
     private List<Character> generateTiles() {
         return Utils.extractor(this.language.equals("EN") ?
@@ -72,7 +78,7 @@ public class Game
     }
     
     private boolean isValid(String word) {
-        return scrabbLib.isValid(word);
+        return this.scrabbLib.isValid(word);
     }
     
     private String readWord(Position start, Position end)

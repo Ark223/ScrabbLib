@@ -1,5 +1,5 @@
 
-public class Position
+public class Position implements Cloneable
 {
     final int x;
     final int y;
@@ -8,6 +8,7 @@ public class Position
         this.x = (int)pos.replaceAll("\\d+", "").charAt(0) - 65;
         this.y = Integer.parseInt(pos.replaceAll("\\D+", "")) - 1;
     }
+    
     public Position(int x, int y) {
         this.x = x;
         this.y = y;

@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 import org.junit.Test;
@@ -8,7 +9,7 @@ public class ScrabbLibTest
     public ScrabbLibTest() {}
     
     @Test
-    public void testScrabbLib() throws Exception
+    public void testScrabbLib() throws IOException, Exception
     {
         ScrabbLib s = new ScrabbLib("PL");
         s.initDictionary();

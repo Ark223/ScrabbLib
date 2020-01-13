@@ -1,5 +1,6 @@
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ public class ScrabbLib
     public enum sortMode {Score, Length};
     public enum premiumSquare {None, DoubleLetter, TripleLetter, DoubleWord, TripleWord};
     private List<String> dictionary = new ArrayList<>();
-    
     private final Map<Character, Integer> engValues = new HashMap<Character, Integer>() {{
         put('A', 1); put('B', 3); put('C', 3); put('D', 2); put('E', 1); put('F', 4); put('G', 2);
         put('H', 4); put('I', 1); put('J', 8); put('K', 5); put('L', 1); put('M', 3); put('N', 1);
@@ -35,18 +35,23 @@ public class ScrabbLib
                                          "-t---t---t---t-----D-----D----d--D---d---D--d" +
                                          "--D---d-d---D---D---t---t---D-T--d---T---d--T";
     
-    public ScrabbLib() { this("EN"); }
-    public ScrabbLib(String lang) { this.language = lang; }
+    public ScrabbLib() {
+        this("EN");
+    }
+    
+    public ScrabbLib(String lang) {
+        this.language = lang;
+    }
     
     // Public
     
-    public void initDictionary() throws Exception {
+    public void initDictionary() throws IOException {
         try {
             File f = new File("dictionaries/" + (this.language.equals("EN") ? "en.txt" : "pl.txt"));
             this.dictionary = Files.readAllLines(f.toPath(), StandardCharsets.UTF_8);
             Collections.sort(this.dictionary, (String a, String b) -> a.length() - b.length());
         } catch (Exception ex) {
-            throw new Exception("The dictionary file could not be read!");
+            throw new IOException("The dictionary file could not be read!");
         }
     }
     
