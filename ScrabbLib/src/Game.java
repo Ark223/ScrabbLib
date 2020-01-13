@@ -89,7 +89,11 @@ public class Game
         return word;
     }
     
-    private Position searcher(Position start, char dir)
+    private Position searcher(Position start, char dir) {
+        return this.searcher(this.board, start, dir);
+    }
+    
+    private Position searcher(char[][] board, Position start, char dir)
     {
         Position offset = dir == 'U' ? new Position(0, -1) : dir == 'D' ?
             new Position(0, 1) : dir == 'R' ? new Position(1, 0) : new Position(-1, 0);
@@ -97,7 +101,8 @@ public class Game
         while (true)
         {
             Position test = pos.add(offset);
-            if (this.board[test.x][test.y] == '-' || test.isOutside()) break;
+            if (test.isOutside()) break;
+            if (board[test.x][test.y] == '-') break;
             pos = test;
         }
         return pos;
@@ -160,10 +165,14 @@ public class Game
         if (!this.isCrossing(move)) return false;
         Move.direction dir = move.getDir();
         ArrayList<Position> raw = move.getPositions();
-        Position start = this.searcher(raw.get(0), dir == Move.direction.Horizontal ? 'L' : 'U');
-        Position end = this.searcher(raw.get(raw.size() - 1), dir == Move.direction.Horizontal ? 'R' : 'D');
-        String word = Utils.insertWord(this.readWord(start, end), move.getWord());
-        if (!this.isValid(word)) return false;
+        Position start = raw.get(0), end = raw.get(raw.size() - 1);
+        if (start.isOutside() || end.isOutside()) return false;
+        String word = move.getWord();
+        char[][] sBoard = this.getBoard().clone();
+        for (int i = 0; i < raw.size(); i++) { Position t = raw.get(i); sBoard[t.x][t.y] = word.charAt(i); }
+        start = this.searcher(sBoard, start, dir == Move.direction.Horizontal ? 'L' : 'U');
+        end = this.searcher(sBoard, end, dir == Move.direction.Horizontal ? 'R' : 'D');
+        word = this.readWord(start, end);
         ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);

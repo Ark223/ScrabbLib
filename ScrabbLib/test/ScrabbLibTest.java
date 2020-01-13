@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 
@@ -11,10 +12,10 @@ public class ScrabbLibTest
     @Test
     public void testScrabbLib() throws IOException, Exception
     {
-        ScrabbLib s = new ScrabbLib("PL");
+        ScrabbLib s = new ScrabbLib();
         s.initDictionary();
         long start = System.currentTimeMillis();
-        List<String> list = s.generateWords("E-ŚRAIN").subList(0, 10);
+        List<String> list = s.generateWords("SEUZ-EQ").subList(0, 10);
         long timeElapsed = System.currentTimeMillis() - start;
         System.out.println("Generated words in: " + timeElapsed + " ms");
         PrintStream out = new PrintStream(System.out, true, "UTF-8");
@@ -29,6 +30,8 @@ public class ScrabbLibTest
         g.tryMakeMove(m2, "TASTEZX", "ACQS");
         g.displayBoard();
         g.displayPlayersInfo();
+        
+        //ArrayList<Move> solutions = s.generateMoves(g, "CVASZCA");
     }
 }
 

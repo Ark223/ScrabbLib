@@ -93,7 +93,7 @@ public class ScrabbLib
     }
     
     public ArrayList<Move> generateMoves(Game game, String letters, sortMode sort) {
-        ArrayList<Move> solutions = new ArrayList<>();
+        final ArrayList<Move> solutions = new ArrayList<>();
         List<String> empty = this.generateWords(letters, sortMode.Length);
         char[][] board = game.getBoard();
         for (int M = 0; M < 2; M++) {
@@ -114,6 +114,8 @@ public class ScrabbLib
                 }
             }
         }
+        Collections.sort(solutions, (Move a, Move b) ->
+            b.getWord().length() - a.getWord().length());
         return solutions;
     }
 }

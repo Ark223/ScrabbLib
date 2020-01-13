@@ -30,17 +30,6 @@ public class Utils
         return tiles;
     }
     
-    public static String insertWord(String raw, String word) {
-        int index = 0;
-        for (int i = 0; i < raw.length(); i++) {
-            if (raw.charAt(i) == '-') { index = i; break; }
-        }
-        for (int i = 0; i < word.length(); i++) {
-            raw = replaceAt(raw, word.charAt(i), index + i);
-        }
-        return raw;
-    }
-    
     public static boolean passWord(String word, String letters, int blanks, int i) {
         if (word.length() == 0 || letters.length() == 0)
             return true;
