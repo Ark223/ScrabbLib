@@ -6,15 +6,6 @@ import java.util.regex.Pattern;
 
 public class Utils
 {
-    public static char[][] cloneBoard(char[][] src) {
-        int length = src.length;
-        char[][] clone = new char[length][src[0].length];
-        for (int i = 0; i < length; i++) {
-            System.arraycopy(src[i], 0, clone[i], 0, src[i].length);
-        }
-        return clone;
-    }
-    
     public static List<String> cutByLength(List<String> list, int length) {
         int index = -1;
         for (int i = 0; i < list.size(); i++) {

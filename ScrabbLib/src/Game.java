@@ -175,7 +175,7 @@ public class Game
         Position start = raw.get(0), end = raw.get(raw.size() - 1);
         if (start.isOutside() || end.isOutside()) return false;
         String word = move.getWord();
-        char[][] sBoard = Utils.cloneBoard(this.getBoard());
+        char[][] sBoard = this.getBoard();
         for (int i = 0; i < raw.size(); i++) { Position t = raw.get(i); sBoard[t.x][t.y] = word.charAt(i); }
         start = this.searcher(sBoard, start, dir == Move.direction.Horizontal ? 'L' : 'U');
         end = this.searcher(sBoard, end, dir == Move.direction.Horizontal ? 'R' : 'D');
@@ -184,8 +184,8 @@ public class Game
         ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);
-            char tile = word.charAt(i);
-            if (this.board[pos.x][pos.y] == '-') {
+            char tileAtPos = this.board[pos.x][pos.y], tile = word.charAt(i);
+            if (tileAtPos == '-') {
                 Position testStart = this.searcher(sBoard, pos, dir == Move.direction.Horizontal ? 'U' : 'L');
                 Position testEnd = this.searcher(sBoard, pos, dir == Move.direction.Horizontal ? 'D' : 'R');
                 if (!testStart.equals(testEnd) && !this.isValid(this.readWord(testStart, testEnd))) return false;
@@ -194,6 +194,8 @@ public class Game
                 if (index < 0) return false;
                 rack = Utils.removeAt(rack, index);
             }
+            else if (tileAtPos != Character.toUpperCase(tile))
+                return false;
         }
         return true;
     }

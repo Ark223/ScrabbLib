@@ -80,20 +80,21 @@ public class ScrabbLib
         return results;
     }
     
-    public ArrayList<Move> generateMoves(Game game) {
+    public List<Move> generateMoves(Game game) {
         return this.generateMoves(game, game.getPlayersRack(), sortMode.Score);
     }
     
-    public ArrayList<Move> generateMoves(Game game, sortMode sort) {
+    public List<Move> generateMoves(Game game, sortMode sort) {
         return this.generateMoves(game, game.getPlayersRack(), sort);
     }
     
-    public ArrayList<Move> generateMoves(Game game, String letters) {
-        return this.generateMoves(game, letters, sortMode.Score);
+    public List<Move> generateMoves(Game game, String tiles) {
+        return this.generateMoves(game, tiles, sortMode.Score);
     }
     
-    public ArrayList<Move> generateMoves(Game game, String letters, sortMode sort) {
-        ArrayList<Move> solutions = new ArrayList<>();
+    public List<Move> generateMoves(Game game, String tiles, sortMode sort) {
+        List<String> empty = this.generateWords(tiles, sortMode.Length);
+        List<Move> solutions = new ArrayList<>();
         char[][] board = game.getBoard();
         for (int M = 0; M < 2; M++) {
             for (int T = 0; T < 15; T++) {
@@ -102,18 +103,19 @@ public class ScrabbLib
                     char c = board[M == 1 ? T : i][M == 0 ? T : i];
                     if (c != '-') extra += c;
                 }
-                List<String> candidates = this.generateWords(letters + extra, sortMode.Length);
+                List<String> candidates = extra.equals("") ? empty :
+                    this.generateWords(tiles + extra, sortMode.Length);
                 for (String word : candidates) {
                     for (int i = 0; i < 15 - word.length(); i++) {
                         Move m = new Move(new Position(M == 1 ? T : i, M == 0 ? T : i),
                             M == 0 ? Move.direction.Horizontal : Move.direction.Vertical, word);
-                        if (game.isValid(m, letters)) solutions.add(m);
+                        if (game.isValid(m, tiles)) solutions.add(m);
                     }
                 }
             }
         }
-        //Collections.sort(solutions, (Move a, Move b) ->
-        //    b.getWord().length() - a.getWord().length());
+        Collections.sort(solutions, (Move a, Move b) ->
+            b.getWord().length() - a.getWord().length());
         return solutions;
     }
 }
