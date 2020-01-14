@@ -31,6 +31,17 @@ public class Position implements Cloneable
     }
     
     @Override
+    public boolean equals(Object obj) {
+        Position pos = (Position)obj;
+        return this.x == pos.x && this.y == pos.y;
+    }
+    
+    @Override
+    public int hashCode() {
+        return 17 * (this.x + 85) + this.y;
+    }
+    
+    @Override
     public String toString() {
         return "Position: (" + this.x + ", " + this.y + ")";
     }

@@ -81,11 +81,15 @@ public class Game
         return this.scrabbLib.isValid(word);
     }
     
-    private String readWord(Position start, Position end)
+    private String readWord(Position start, Position end) {
+        return this.readWord(this.board, start, end);
+    }
+    
+    private String readWord(char[][] board, Position start, Position end)
     {
         String word = "";
         ArrayList<Position> positions = Move.getPositions(start, end);
-        for (Position pos : positions) word += this.board[pos.x][pos.y];
+        for (Position pos : positions) word += board[pos.x][pos.y];
         return word;
     }
     
@@ -133,7 +137,10 @@ public class Game
     }
     
     public char[][] getBoard() {
-        return this.board;
+        char[][] b = new char[this.size][this.size];
+        for (int i = 0; i < this.size; i++)
+            System.arraycopy(this.board[i], 0, b[i], 0, this.size);
+        return b;
     }
     
     public String getPlayersRack() {
@@ -168,29 +175,25 @@ public class Game
         Position start = raw.get(0), end = raw.get(raw.size() - 1);
         if (start.isOutside() || end.isOutside()) return false;
         String word = move.getWord();
-        char[][] sBoard = this.getBoard().clone();
+        char[][] sBoard = Utils.cloneBoard(this.getBoard());
         for (int i = 0; i < raw.size(); i++) { Position t = raw.get(i); sBoard[t.x][t.y] = word.charAt(i); }
         start = this.searcher(sBoard, start, dir == Move.direction.Horizontal ? 'L' : 'U');
         end = this.searcher(sBoard, end, dir == Move.direction.Horizontal ? 'R' : 'D');
-        word = this.readWord(start, end);
+        word = this.readWord(sBoard, start, end);
         if (!this.isValid(word)) return false;
         ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);
-            char letter = word.charAt(i);
+            char tile = word.charAt(i);
             if (this.board[pos.x][pos.y] == '-') {
-                int index = rack.contains(Character.toString(letter)) ?
-                    rack.indexOf(letter) : rack.indexOf(Character.toLowerCase(letter));
+                Position testStart = this.searcher(sBoard, pos, dir == Move.direction.Horizontal ? 'U' : 'L');
+                Position testEnd = this.searcher(sBoard, pos, dir == Move.direction.Horizontal ? 'D' : 'R');
+                if (!testStart.equals(testEnd) && !this.isValid(this.readWord(testStart, testEnd))) return false;
+                int index = rack.contains(Character.toString(tile)) ?
+                    rack.indexOf(tile) : rack.indexOf(Character.toLowerCase(tile));
                 if (index < 0) return false;
                 rack = Utils.removeAt(rack, index);
             }
-            if (Character.toUpperCase(this.board[pos.x][pos.y]) == word.charAt(i)) {
-                Position testStart = this.searcher(pos, dir == Move.direction.Horizontal ? 'U' : 'L');
-                Position testEnd = this.searcher(pos, dir == Move.direction.Horizontal ? 'D' : 'R');
-                if (!this.isValid(this.readWord(testStart, testEnd))) return false;
-            }
-            else if (this.board[pos.x][pos.y] != '-')
-                return false;
         }
         return true;
     }
@@ -210,17 +213,16 @@ public class Game
     
     public void makeMove(Move move, String rack, String add) {
         String word = move.getWord();
-        List<Character> usedTiles = new ArrayList<>();
         ArrayList<Position> positions = move.getPositions();
         for (int i = 0; i < positions.size(); i++) {
-            int x = positions.get(i).getX(), y = positions.get(i).getY();
-            if (this.board[x][y] == '-') usedTiles.add(word.charAt(i));
-            this.board[x][y] = word.charAt(i);
-        }
-        for (char letter : usedTiles) {
-            int index = rack.contains(Character.toString(letter)) ?
-                rack.indexOf(letter) : rack.indexOf(Character.toLowerCase(letter));
-            if (index >= 0) rack = Utils.removeAt(rack, index);
+            Position pos = positions.get(i);
+            if (this.board[pos.x][pos.y] == '-') {
+                char tile = word.charAt(i);
+                int index = rack.contains(Character.toString(tile)) ?
+                    rack.indexOf(tile) : rack.indexOf(Character.toLowerCase(tile));
+                if (index >= 0) rack = Utils.removeAt(rack, index);
+                this.board[pos.x][pos.y] = tile;
+            }
         }
         rack = !add.equals("") ? rack + add : this.takeTiles(rack);
         this.playerInfo.set(this.turnForPlayer, new Player(rack, calculateScore(move)));

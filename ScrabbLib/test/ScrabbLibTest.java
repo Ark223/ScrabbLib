@@ -31,8 +31,8 @@ public class ScrabbLibTest
         g.displayBoard();
         g.displayPlayersInfo();
         
-        ArrayList<Move> solutions = s.generateMoves(g, "CVASZCA");
-        out.println("Size: " + solutions.size());
+        //ArrayList<Move> solutions = s.generateMoves(g, "CVASZCA");
+        //out.println("Size: " + solutions.size());
         
     }
 }
