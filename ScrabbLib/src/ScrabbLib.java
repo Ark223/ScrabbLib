@@ -93,8 +93,7 @@ public class ScrabbLib
     }
     
     public ArrayList<Move> generateMoves(Game game, String letters, sortMode sort) {
-        final ArrayList<Move> solutions = new ArrayList<>();
-        List<String> empty = this.generateWords(letters, sortMode.Length);
+        ArrayList<Move> solutions = new ArrayList<>();
         char[][] board = game.getBoard();
         for (int M = 0; M < 2; M++) {
             for (int T = 0; T < 15; T++) {
@@ -103,10 +102,9 @@ public class ScrabbLib
                     char c = board[M == 1 ? T : i][M == 0 ? T : i];
                     if (c != '-') extra += c;
                 }
-                List<String> candidates = extra.equals("") ? empty :
-                    this.generateWords(letters + extra, sortMode.Length);
+                List<String> candidates = this.generateWords(letters + extra, sortMode.Length);
                 for (String word : candidates) {
-                    for (int i = 0; i < 15 - word.length() + 1; i++) {
+                    for (int i = 0; i < 14 - word.length() + 1; i++) {
                         Move m = new Move(new Position(M == 1 ? T : i, M == 0 ? T : i),
                             M == 0 ? Move.direction.Horizontal : Move.direction.Vertical, word);
                         if (game.isValid(m, letters)) solutions.add(m);
@@ -114,8 +112,8 @@ public class ScrabbLib
                 }
             }
         }
-        Collections.sort(solutions, (Move a, Move b) ->
-            b.getWord().length() - a.getWord().length());
+        //Collections.sort(solutions, (Move a, Move b) ->
+        //    b.getWord().length() - a.getWord().length());
         return solutions;
     }
 }

@@ -173,6 +173,7 @@ public class Game
         start = this.searcher(sBoard, start, dir == Move.direction.Horizontal ? 'L' : 'U');
         end = this.searcher(sBoard, end, dir == Move.direction.Horizontal ? 'R' : 'D');
         word = this.readWord(start, end);
+        if (!this.isValid(word)) return false;
         ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);
