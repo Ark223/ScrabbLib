@@ -104,7 +104,7 @@ public class ScrabbLib
                 }
                 List<String> candidates = this.generateWords(letters + extra, sortMode.Length);
                 for (String word : candidates) {
-                    for (int i = 0; i < 14 - word.length() + 1; i++) {
+                    for (int i = 0; i < 15 - word.length(); i++) {
                         Move m = new Move(new Position(M == 1 ? T : i, M == 0 ? T : i),
                             M == 0 ? Move.direction.Horizontal : Move.direction.Vertical, word);
                         if (game.isValid(m, letters)) solutions.add(m);
