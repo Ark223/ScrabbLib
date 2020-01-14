@@ -29,10 +29,10 @@ standard dictionary or lexicon).
    List<String> generateWords(String letters, sortMode sort) //Generates and returns valid
    //words for given letters sorted by score or length (default sorting mode: score)
 
-5. ArrayList<Move> generateMoves(Game game)
-   ArrayList<Move> generateMoves(Game game, sortMode sort)
-   ArrayList<Move> generateMoves(Game game, String rack)
-   ArrayList<Move> generateMoves(Game game, String rack, sortMode sort) //generates and
+5. List<Move> generateMoves(Game game)
+   List<Move> generateMoves(Game game, sortMode sort)
+   List<Move> generateMoves(Game game, String rack)
+   List<Move> generateMoves(Game game, String rack, sortMode sort) //generates and
    //returns best possible moves for given game state sorted by score or word length
    //(default sorting mode: score, letters: rack of player whose turn is currently
 ```
@@ -69,6 +69,5 @@ standard dictionary or lexicon).
 ```
 
 ## ToDo
-- extended testing and bugfixing
 - score calculation for given move
 - blank support
