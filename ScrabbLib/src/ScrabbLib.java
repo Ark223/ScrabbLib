@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public class ScrabbLib
@@ -93,6 +94,7 @@ public class ScrabbLib
     }
     
     public List<Move> generateMoves(Game game, String tiles, sortMode sort) {
+        ConcurrentLinkedQueue<Move> queue = new ConcurrentLinkedQueue<>();
         List<String> empty = this.generateWords(tiles, sortMode.Length);
         List<Move> solutions = new ArrayList<>();
         char[][] board = game.getBoard();
@@ -107,13 +109,25 @@ public class ScrabbLib
                     this.generateWords(tiles + extra, sortMode.Length);
                 for (String word : candidates) {
                     for (int i = 0; i < 15 - word.length(); i++) {
-                        Move m = new Move(new Position(M == 1 ? T : i, M == 0 ? T : i),
-                            M == 0 ? Move.direction.Horizontal : Move.direction.Vertical, word);
-                        if (game.isValid(m, tiles)) solutions.add(m);
+                        queue.add(new Move(new Position(M == 1 ? T : i, M == 0 ? T : i),
+                            M == 0 ? Move.direction.Horizontal : Move.direction.Vertical, word));
                     }
                 }
             }
         }
+        int threadCount = Runtime.getRuntime().availableProcessors() * 10;
+        for (int i = 0; i < threadCount; i++) {
+            new Thread() {
+                @Override
+                public void run() {
+                    while (!queue.isEmpty()) {
+                        Move m = queue.poll();
+                        if (game.isValid(m, tiles)) solutions.add(m);
+                    }
+                }
+            }.start();
+        }
+        while (!queue.isEmpty()) {}
         Collections.sort(solutions, (Move a, Move b) ->
             b.getWord().length() - a.getWord().length());
         return solutions;
