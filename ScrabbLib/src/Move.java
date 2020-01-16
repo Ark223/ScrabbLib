@@ -21,20 +21,26 @@ public class Move
     public ArrayList<Position> getPositions() {
         ArrayList<Position> positions = new ArrayList<>();
         Position start = this.getPos();
-        positions.add(start.clone());
         Move.direction direction = this.getDir();
-        for (int i = 1; i < this.getWord().length(); i++)
-            positions.add(new Position(start.x + (direction == Move.direction.Horizontal ?
-                i : 0), start.y + (direction == Move.direction.Vertical ? i : 0)));
+        Position offset = new Position(direction == Move.direction.Horizontal
+            ? 1 : 0, direction == Move.direction.Vertical ? 1 : 0);
+        int len = this.getWord().length(), i = 0;
+        while (i < len) {
+            i++; positions.add(start);
+            start = start.add(offset);
+        }
         return positions;
     }
     
     public static ArrayList<Position> getPositions(Position start, Position end) {
         ArrayList<Position> positions = new ArrayList<>();
-        Position temp = end.sub(start);
-        for (int i = 0; i <= (temp.x == 0 ? temp.y : temp.x); i++)
-            positions.add(new Position(temp.x != 0 ? (start.x + i) :
-                start.x, temp.y != 0 ? (start.y + i) : start.y));
+        Position temp = end.sub(start), t = start.clone();
+        Position offset = new Position(temp.x != 0 ? 1 : 0, temp.y != 0 ? 1 : 0);
+        int len = temp.x == 0 ? temp.y : temp.x, i = 0;
+        while (i <= len) {
+            i++; positions.add(t);
+            t = t.add(offset);
+        }
         return positions;
     }
     

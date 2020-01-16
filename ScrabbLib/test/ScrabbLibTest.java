@@ -34,7 +34,7 @@ public class ScrabbLibTest
         
         out.println("\nTest 3.");
         start = System.currentTimeMillis();
-        List<Move> solutions = s.generateMoves(g, "CVASZCA").subList(0, 20);
+        List<Move> solutions = s.generateMoves(g, "CVASZCA");
         timeElapsed = System.currentTimeMillis() - start;
         System.out.println("Generated words in: " + timeElapsed + " ms");
         solutions.stream().forEach(move -> {
