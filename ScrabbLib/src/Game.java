@@ -191,8 +191,8 @@ public class Game
         ArrayList<Position> positions = Move.getPositions(start, end);
         for (int i = 0; i < positions.size(); i++) {
             Position pos = positions.get(i);
-            char tileAtPos = this.board[pos.x][pos.y], tile = word.charAt(i);
-            if (tileAtPos == '-') {
+            char tile = word.charAt(i);
+            if (this.board[pos.x][pos.y] == '-') {
                 Position testStart = this.searcher(sBoard, pos, dir == Move.direction.Horizontal ? 'U' : 'L');
                 Position testEnd = this.searcher(sBoard, pos, dir == Move.direction.Horizontal ? 'D' : 'R');
                 if (!testStart.equals(testEnd) && !this.isValid(this.readWord(testStart, testEnd))) return false;
