@@ -19,22 +19,15 @@ standard dictionary or lexicon).
 
 ---
 ```java
-1. void initDictionary() //initializies the dictionary for specific language
-
-2. int score(String word) //returns score (sum of values) for given word
-
-3. boolean isValid(String word) //returns true if word exists in dictionary, otherwise false
-
+1. void initDictionary()
+2. int score(String word)
+3. boolean isValid(String word)
 4. List<String> generateWords(String letters)
-   List<String> generateWords(String letters, sortMode sort) //Generates and returns valid
-   //words for given letters sorted by score or length (default sorting mode: score)
-
+   List<String> generateWords(String letters, sortMode sort)
 5. List<Move> generateMoves(Game game)
    List<Move> generateMoves(Game game, sortMode sort)
    List<Move> generateMoves(Game game, String rack)
-   List<Move> generateMoves(Game game, String rack, sortMode sort) //generates and
-   //returns best possible moves for given game state sorted by score or word length
-   //(default sorting mode: score, letters: rack of player whose turn is currently
+   List<Move> generateMoves(Game game, String rack, sortMode sort)
 ```
 
 ### Game(String lang, int players) | Game(Game game)
@@ -42,30 +35,19 @@ standard dictionary or lexicon).
 
 ---
 ```java
-1. void displayBoard() //displays a Scrabble board for current game state on console
-
-2. void displayPlayersInfo() //displays statistics of players (score and rack)
-
-3. char[][] getBoard() //returns a Scrabble board for current game state
-
-4. String getPlayersRack() //returns rack of player whose turn is currently
-
-5. boolean isEmpty() //returns boolean if the Scrabble board is currently empty (no tiles placed)
-
-6. boolean isCrossing(Move move) //returns boolean if given move meets the placed tiles on board
-
+1. void displayBoard()
+2. void displayPlayersInfo()
+3. char[][] getBoard()
+4. String getPlayersRack()
+5. boolean isEmpty()
+6. boolean isCrossing(Move move)
 7. boolean isValid(Move move)
-   boolean isValid(Move move, String rack) //returns boolean if given scenario is valid to be
-   //played for current game state
-
+   boolean isValid(Move move, String rack)
 8. boolean tryMakeMove(Move move)
-   boolean tryMakeMove(Move move, String rack, String add) //checks if given scenario is valid
-   //and makes the move if it's true
-
+   boolean tryMakeMove(Move move, String rack, String add)
 9. void makeMove(Move move)
-   void makeMove(Move move, String rack, String add) //makes the move without validity check
-
-10. void passTurn() //changes the turn for next player
+   void makeMove(Move move, String rack, String add)
+10. void passTurn()
 ```
 
 ## ToDo
